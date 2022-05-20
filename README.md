@@ -1,3 +1,5 @@
+Ok below is basically stuff I wanna do for the folder, if i claim the ticket is done and is not reflected in the app, i apologize as i must have implemented in my new, currently incomplete v4 of todolist.
+
 Change elaborate textbox to textarea and find a way to reference (done)
 Change to modal pages(done)
 Need to highlight which pages you are on (what does this even mean, can be achieved by beautifying the page and introducing page distinctions)
