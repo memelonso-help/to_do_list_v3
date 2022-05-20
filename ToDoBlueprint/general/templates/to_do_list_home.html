@@ -1,0 +1,19 @@
+{% extends "to_do_list_base.html" %}
+{% block title %}Home page{%endblock%}
+{% block content %}
+<!-- "#" just refers the webpage to the same location, method = "post" means all data is not cached like in get method-->
+<h1>To-do-list</h1>
+<!-- For all entries in listdb, print all entries, need to fill up again -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {{message}}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <br>
+    {% if user == None %}
+        <p><a href = "/auth/login">Click here to login!</a></p>
+        <p><a href = "/auth/signup">New user? Register with us!</a></p>
+    {% endif %}
+{% endblock %}
