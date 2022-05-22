@@ -1,17 +1,19 @@
 # changing to sqlalchemy and sqlalchemy.orm packages on next edition
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin
 from datetime import datetime, date
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey, Column, Integer, String, Date
 from sqlalchemy.ext.declarative import declarative_base
 
 db = SQLAlchemy()
+login_manager = LoginManager()
 
-class userlist(db.Model):
+class userlist(db.Model, UserMixin):
     __tablename__ = "userlist"
 
-    _id = db.Column(db.Integer, primary_key = True)
-    _user = db.Column(db.String(20))
+    id = db.Column(db.Integer, primary_key = True)
+    _user = db.Column(db.String(20), unique = True)
     _password = db.Column(db.String(200))
     todoass = relationship("todolist", cascade = "all, delete", back_populates = "bossuser")
     compass = relationship("donelist", cascade = "all, delete", back_populates = "bossuser")
@@ -20,14 +22,23 @@ class userlist(db.Model):
         self._user = user
         self._password = password
 
+    def get(self):
+        if self.id in userlist.id:
+            return self
+
+    # @_password.setter
+    # def password(self, new_password):
+    #     if self._password != new_password:
+    #         self._password = new_password
+
 class todolist(db.Model):
     __tablename__ = "todolist"
 
     _id = db.Column(db.Integer, primary_key = True)
     _user = db.Column(db.String(200))
-    _userid = db.Column(db.Integer, ForeignKey("userlist._id"))
+    _userid = db.Column(db.Integer, ForeignKey("userlist.id"))
     task = db.Column(db.String(200))
-    due_date = db.Column(db.String(200))
+    due_date = db.Column(db.Date)
     priority = db.Column(db.Integer)
     details = db.Column(db.String(250))
     bossuser = relationship("userlist", back_populates = "todoass")
@@ -44,7 +55,7 @@ class donelist(db.Model):
 
     _id = db.Column(db.Integer, primary_key = True)
     _user = db.Column(db.String(200))
-    _userid = db.Column(db.Integer, ForeignKey("userlist._id"))
+    _userid = db.Column(db.Integer, ForeignKey("userlist.id"))
     task = db.Column(db.String(200))
     due_date = db.Column(db.String(200)) # might wanna change this to allow for notifications in the future
     completed_date = db.Column(db.Date)

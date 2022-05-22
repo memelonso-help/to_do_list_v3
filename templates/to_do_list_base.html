@@ -84,13 +84,18 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-              <li><a href="/">Homepage</a></li>
-              <li><a href="/auth/signup">Sign up</a></li>
-              <li><a href="/auth/login">Login</a></li>
-              <li><a href="/mypages/user-addtasks">Go to User page</a></li>
-              <li><a href="/mypages/tasklist">To do list</a></li>
-              <li><a href="/mypages/completed_tasks">List of completed tasks</a></li>
-              <li><a href="/auth/logout">Logout</a></li>
+              <li><a href="/">Homepage</a></li>  
+              {% if not current_user.is_authenticated %} 
+                <li><a href="/auth/signup">Sign up</a></li>
+                <li><a href="/auth/login">Login</a></li>
+              {% endif %}
+              {% if current_user.is_authenticated %}
+                <li><a href="/mypages/user-addtasks">Go to User page</a></li>
+                <li><a href="/mypages/tasklist">To do list</a></li>
+                <li><a href="/mypages/completed_tasks">List of completed tasks</a></li>
+                <!-- <li><a href="/auth/settings">Settings</a></li> -->
+                <li><a href="/auth/logout">Logout</a></li>
+              {% endif %}
             </ul>
           </div>
         </nav>

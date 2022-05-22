@@ -1,4 +1,5 @@
 from flask import render_template, Blueprint, flash, session
+from flask_login import current_user
 
 main = Blueprint("main", __name__, template_folder = "templates")
 
@@ -7,8 +8,8 @@ main = Blueprint("main", __name__, template_folder = "templates")
 @main.route("/home")
 def home():
     user = None
-    if "user" in session:
-        user = session["user"]
+    if "_user_id" in session:
+        user = current_user._user
         flash(f"Hi {user}!")
     else:
         flash("You wanna log in?")

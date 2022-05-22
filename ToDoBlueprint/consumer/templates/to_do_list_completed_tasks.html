@@ -17,22 +17,24 @@
     </div>
 <h1>Completed list</h1>
 <div>
-    <form action = "#", method = "POST">
-        <table>
-            <tr>
-                <th>Task</th>
-                <th>Completed date</th>
-                <th>Check if wanna delete</th>
-            </tr>
+    <table>
+        <tr>
+            <th>Task</th>
+            <th>Completed date</th>
+            <th>Check if wanna delete</th>
+        </tr>
+        <form action = "#", method = "POST">
+            {{ form.csrf_token }}
             {% for tasks in completed %}
             <tr>
                 <td>{{tasks.task if tasks.task else None}}</td>
                 <td>{{tasks.completed_date if tasks.completed_date else None}}</td>
-                <td><input type = "checkbox", name = "delete_checkbox",  value = "{{tasks.task}}"/></td>
+                <td><input type = "checkbox", name = "checkbox",  value = "{{tasks.task}}"/> </label></td>
             </tr>
             {% endfor %}
         </table><br>
-        <input type = "submit", value = "Delete eternally">
+        {{ form.submit }}
+        <!-- <input type = "submit", value = "Delete eternally"> -->
     </form>
 </div>
 

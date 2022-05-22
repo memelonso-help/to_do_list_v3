@@ -1,11 +1,6 @@
 {% extends "to_do_list_base.html" %}
 {% block style %}
 <style>
-    .problemchild {
-        width: 50%;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-    }
 </style>
 {% endblock %}
 {% block title %}User's input page{%endblock%}
@@ -23,28 +18,29 @@
 <h1>To do list</h1>
 <!-- create a form to select tasks completed -->
 <div>
-    <form action = "#", method = "POST">
-        <table>
-            <tr>
-                <th>Priority</th>
-                <th>Task</th>
-                <th>Due date</th>
-                <th>Details</th>
-                <th>Check if completed</th>
-                <th>Check to delete</th>
-            </tr>
+    <table>
+        <tr>
+            <th>Priority</th>
+            <th>Task</th>
+            <th>Details</th>
+            <th>Due date</th>
+            <th>Check if completed</th>
+            <th>Check to delete</th>
+        </tr>
+        <form action = "#", method = "POST">
+            {{ form.csrf_token }}
             {% for tasks in task_list %}
             <tr>
                 <td>{{tasks.priority if tasks.priority else None}}</td>
                 <td>{{tasks.task if tasks.task else None}}</td>
-                <td class = "problemchild">{{tasks.details if tasks.details else None}}</td>
+                <td>{{tasks.details if tasks.details else None}}</td>
                 <td>{{tasks.due_date if tasks.due_date else None}}</td>
                 <td><input type = "checkbox", name = "complete_checkbox",  value = "{{tasks.task}}"/></td>
                 <td><input type = "checkbox", name = "delete_checkbox",  value = "{{tasks.task}}"/></td>
             </tr>
             {% endfor %}
         </table><br>
-        <input type = "submit", value = "Completed">
+        <p>{{ form.submit }}</p>
     </form>
 </div>
 

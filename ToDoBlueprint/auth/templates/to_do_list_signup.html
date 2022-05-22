@@ -12,10 +12,16 @@
 <h1>Signup</h1>
 <!-- create a form to login to -->
 <form action = "#", method = "POST">
-    <label for="name">Full name please:</label><br>
+    {{ form.csrf_token }}
+    <div>{{ form.username.label }}: {{ form.username(placeholder = "20 char limit") }}</div>
+    <div>{{ form.password.label }}: {{ form.password() }}</div>
+    <div>{{ form.recaptcha }}</div>
+    <!-- <p>Password has to be between 6-20 chars, a digit number, a uppercase and lowercase number, and a special character</p> -->
+    <div>{{ form.submit }}</div>
+    <!-- <label for="name">Full name please:</label><br>
     <input type="text", name = "name", placeholder = "Input name please" value = "{{name if name}}"><br><br>
     <input type="password", name = "password", placeholder = "Input password please" value = "{{password if password}}"><br><br>
-    <input type="submit", value="Submit">
+    <input type="submit", value="Submit"> -->
 </form>
 
 <p><a href = "/auth/login">Already have an account? Click here to login!</a></p>

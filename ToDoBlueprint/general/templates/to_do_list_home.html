@@ -15,5 +15,11 @@
     {% if user == None %}
         <p><a href = "/auth/login">Click here to login!</a></p>
         <p><a href = "/auth/signup">New user? Register with us!</a></p>
+    <!-- <p><a href = "/consumer/settings">Click here to change user settings</a></p> -->
+    {% else %}
+        <p><a href = "/mypages/user-addtasks">Would you like to add some tasks?</a></p>
+        <p><a href = "/mypages/tasklist">Take a look at some of your tasks?</a></p>
+        <p><a href = "/mypages/completed_tasks">Here are all the tasks you have completed</a></p>
+        <!-- <p><a href = "/auth/settings">Would you like to change your password?</a></p> -->
     {% endif %}
 {% endblock %}
