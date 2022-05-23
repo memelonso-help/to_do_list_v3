@@ -45,43 +45,43 @@ def unauthorized():
 def login():
     login_message = None
     form = loginform(request.form)
+    logged_in = None
     if request.method == "POST" and form.validate_on_submit():
         a = userlist.query.filter_by(_user = form.username.data).first()
         if a and check_password_hash(a._password, form.password.data):
+            logged_in = True
             login_user(a, remember = form.remember.data)
             login_message = f"Welcome {form.username.data}!"
         elif a and not check_password_hash(a._password, form.password.data):
             login_message = "Wrong password."
         else:
             login_message = "No such user exists."
-        return render_template("to_do_list_login.html", login_message = login_message, form = form, a = a)
-    return render_template("to_do_list_login.html", login_message = login_message, form = form, a = None)
+    return render_template("to_do_list_login.html", login_message = login_message, form = form, logged_in = logged_in)
 
 login_manager.refresh_view = "auth.login"
 
-# # allow user to change account settings, two forms, one to submit
-# @auth.route("/settings", methods = ["POST", "GET"])
-# @fresh_login_required
-# def change_settings():
-#     change_message = None
-#     form = changepasswordform(request.form)
-#     if request.method == ["POST"] and form.validate_on_submit():
-#         a = userlist.query.filter_by(_user = form.username.data).first()
-#         if a:
-#             new_password1 = generate_password_hash(form.new_password1.data)
-#             new_password2 = generate_password_hash(form.new_password2.data)
-#             if a._password != form.old_password.data:
-#                 change_message = "You have input the wrong original password bro."
-#             elif new_password1 != new_password2:
-#                 change_message = "The two new passwords don't match."
-#             elif new_password1 == a._password:
-#                 change_message = "Don't reuse your old password man."
-#             else:
-#                 userlist.password(new_password1)
-#                 change_message = "Updated to new password."
-#             return render_template("to_do_list_settings.html", change_message = change_message, form = form)
-#         change_message = "No such user {a} found."
-#     return render_template("to_do_list_settings.html", change_message = change_message, form = form)
+# allow user to change account settings, two forms, one to submit
+@auth.route("/settings", methods = ["POST", "GET"])
+@fresh_login_required
+def change_settings():
+    change_message = None
+    form = changepasswordform(request.form)
+    if request.method == "POST" and form.validate_on_submit():
+        a = userlist.query.filter_by(_user = form.username.data).first()
+        if a and session["_user_id"] == str(a.id):
+            if not check_password_hash(a._password, form.old_password.data):
+                change_message = "You have input the wrong original password bro."
+            elif form.new_password1.data != form.new_password2.data:
+                change_message = "The two new passwords don't match."
+            elif check_password_hash(a._password, form.new_password1.data):
+                change_message = "Don't reuse your old password man."
+            elif form.new_password1.data == form.new_password2.data and check_password_hash(a._password, form.old_password.data):
+                a._password = generate_password_hash(form.new_password1.data)
+                db.session.commit()
+                change_message = "Updated to new password."
+            return render_template("to_do_list_settings.html", change_message = change_message, form = form)
+        change_message = f"No such user \"{form.username.data}\" found."
+    return render_template("to_do_list_settings.html", change_message = change_message, form = form)
 
 @auth.route("/logout")
 @login_required
