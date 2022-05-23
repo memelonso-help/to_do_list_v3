@@ -26,11 +26,6 @@ class userlist(db.Model, UserMixin):
         if self.id in userlist.id:
             return self
 
-    # @_password.setter
-    # def password(self, new_password):
-    #     if self._password != new_password:
-    #         self._password = new_password
-
 class todolist(db.Model):
     __tablename__ = "todolist"
 

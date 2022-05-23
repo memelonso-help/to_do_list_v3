@@ -2,11 +2,11 @@ Change elaborate textbox to textarea and find a way to reference (done)
 Change to modal pages(done)
 Need to highlight which pages you are on (what does this even mean, can be achieved by beautifying the page and introducing page distinctions)
 Be able to select multiple check boxes using shift and control (later, this is javascript)
-<!-- Allow a way to retain passwords and reset passwords 
-Figure out how to remember users (flask loginmanager and flask-wtf) -->
-<!-- Remove the details when form has been submitted (I will have to live with this one since I wanna use modal window instead of flash) -->
+Allow a way to retain passwords and reset passwords 
+Figure out how to remember users (flask loginmanager and flask-wtf, done)
+Remove the details when form has been submitted (I will have to live with this one since I wanna use modal window instead of flash)
 
-<!-- For changing of passwords, I need to do the following steps: set up a setter method to change password, set up a settings/change password function that is decorated by fresh_login_required decorator, set the redirect view, setup a form and html for change password -->
+For changing of passwords, I need to do the following steps: set up a setter method to change password, set up a settings/change password function that is decorated by fresh_login_required decorator, set the redirect view, setup a form and html for change password (done)
 
 Add more help to travelling around the webpage (done)
 Need to tidy up the code

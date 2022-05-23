@@ -28,9 +28,6 @@ class loginform(FlaskForm):
     remember = BooleanField("Remember me")
     submit = SubmitField(label = "Submit")
 
-class settingsform(FlaskForm):
-    pass
-
 class taskfillform(FlaskForm):
     priority = SelectField("Indicate priority please", validators = [InputRequired()], choices = [(1), (2), (3)])
     task = StringField("Give a name to your task", validators = [InputRequired(), Length(max = 20, message = "20 char limit")])

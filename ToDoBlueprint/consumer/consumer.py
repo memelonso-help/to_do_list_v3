@@ -63,6 +63,5 @@ def completed_tasks():
         delete = request.form.getlist("checkbox")
         for i in delete:
             adj_checkbox("comp_list", i)
-            # flash(f"Deleted task {i} from completed list eternally.")
         delete= "".join(i + ", " for i in delete)
     return render_template("to_do_list_completed_tasks.html", completed = donelist.query.filter_by(_user = current_user._user).all(), delete = delete, form = form)
